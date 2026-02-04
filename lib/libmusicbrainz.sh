@@ -127,12 +127,12 @@ get_coverpath_musicbrainz() {
 # Rückgabe.: 0 = Erfolgreich geladen
 # Setzt....: MUSICBRAINZ_API_BASE_URL, COVERART_API_BASE_URL,
 # .........  MUSICBRAINZ_USER_AGENT, MUSICBRAINZ_TIMEOUT (global)
-# Nutzt....: config_get_value_ini() aus libconfig.sh
+# Nutzt....: config_get_value_ini() aus libsettings.sh
 # Hinweis..: Wird von musicbrainz_check_dependencies() aufgerufen, um Werte
 # .........  zu initialisieren bevor das Modul verwendet wird
 # ===========================================================================
 load_api_config_musicbrainz() {
-    # Lese API-Konfiguration mit config_get_value_ini() aus libconfig.sh
+    # Lese API-Konfiguration mit config_get_value_ini() aus libsettings.sh
     local base_url coverart_base_url user_agent timeout
     
     base_url=$(config_get_value_ini "musicbrainz" "api" "base_url" "https://musicbrainz.org/ws/2")

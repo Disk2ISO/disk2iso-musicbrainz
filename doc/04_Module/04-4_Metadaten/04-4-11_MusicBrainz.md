@@ -1,4 +1,4 @@
-# Kapitel 4.4.1: MusicBrainz-Integration
+# Kapitel 4.4.11: MusicBrainz-Provider
 
 Automatische Album-Metadaten für Audio-CDs via MusicBrainz und Cover Art Archive.
 

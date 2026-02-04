@@ -1,0 +1,45 @@
+<!-- MusicBrainz Widget Settings -->
+<!-- Dynamisch geladen via musicbrainz_widget_settings.js -->
+<div class="form-section" id="musicbrainz-widget-settings">
+    <h2>
+        <img src="{{ url_for('static', filename='img/audio.svg') }}" alt="" style="width:24px;height:24px;vertical-align:middle;margin-right:8px;">
+        MusicBrainz Provider
+    </h2>
+    
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="musicbrainz_active" name="musicbrainz_active" {{ 'checked' if config.active else '' }}>
+            MusicBrainz Provider aktivieren
+        </label>
+        <div class="help-text">
+            Aktiviert die automatische Metadaten-Abfrage für Audio-CDs von musicbrainz.org.
+            {% if not config.enabled %}
+            <br><strong style="color: #f56565;">⚠ Modul nicht vollständig konfiguriert (enabled=false)</strong>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div id="musicbrainz-settings" style="{{ 'display: block;' if config.active else 'display: none;' }}">
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="musicbrainz_cache_enabled" name="musicbrainz_cache_enabled" {{ 'checked' if config.cache_enabled else '' }}>
+                Cache aktivieren
+            </label>
+            <div class="help-text">Zwischenspeicherung von API-Abfragen (empfohlen)</div>
+        </div>
+        
+        <div id="musicbrainz-cache-settings" style="{{ 'display: block;' if config.cache_enabled else 'display: none;' }}">
+            <div class="form-group">
+                <label for="musicbrainz_cache_duration">Cache-Dauer (Tage)</label>
+                <input type="number" id="musicbrainz_cache_duration" name="musicbrainz_cache_duration" value="{{ config.cache_duration_days }}" min="1" max="365" step="1">
+                <div class="help-text">Wie lange sollen Metadaten im Cache gespeichert werden (default: 30 Tage)</div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="musicbrainz_rate_limit">Rate-Limit Verzögerung (ms)</label>
+            <input type="number" id="musicbrainz_rate_limit" name="musicbrainz_rate_limit" value="{{ config.rate_limit_delay }}" min="100" max="5000" step="100">
+            <div class="help-text">Verzögerung zwischen API-Requests (default: 1000ms, empfohlen für MusicBrainz API)</div>
+        </div>
+    </div>
+</div>

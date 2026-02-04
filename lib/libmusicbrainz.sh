@@ -132,13 +132,13 @@ get_coverpath_musicbrainz() {
 # .........  zu initialisieren bevor das Modul verwendet wird
 # ===========================================================================
 load_api_config_musicbrainz() {
-    # Lese API-Konfiguration mit config_get_value_ini() aus libsettings.sh
+    # Lese API-Konfiguration mit settings_get_value_ini() aus libsettings.sh
     local base_url coverart_base_url user_agent timeout
     
-    base_url=$(config_get_value_ini "musicbrainz" "api" "base_url" "https://musicbrainz.org/ws/2")
-    coverart_base_url=$(config_get_value_ini "musicbrainz" "api" "coverart_base_url" "https://coverartarchive.org")
-    user_agent=$(config_get_value_ini "musicbrainz" "api" "user_agent" "disk2iso/1.2.0")
-    timeout=$(config_get_value_ini "musicbrainz" "api" "timeout" "10")
+    base_url=$(settings_get_value_ini "musicbrainz" "api" "base_url" "https://musicbrainz.org/ws/2")
+    coverart_base_url=$(settings_get_value_ini "musicbrainz" "api" "coverart_base_url" "https://coverartarchive.org")
+    user_agent=$(settings_get_value_ini "musicbrainz" "api" "user_agent" "disk2iso/1.2.0")
+    timeout=$(settings_get_value_ini "musicbrainz" "api" "timeout" "10")
     
     # Setze globale Variablen
     MUSICBRAINZ_API_BASE_URL="$base_url"
@@ -464,7 +464,7 @@ init_musicbrainz_provider() {
     # Prüfe ob Provider aktiviert ist (Provider verwaltet sich selbst!)
     # Prüfe ob Provider aktiv ist (Lazy Init - nutzt Self-Healing)
     local is_active
-    is_active=$(config_get_value_ini "musicbrainz" "settings" "active" "true")
+    is_active=$(settings_get_value_ini "musicbrainz" "settings" "active" "true")
     
     if [[ "$is_active" == "false" ]]; then
         log_info "MusicBrainz: Provider installiert aber nicht aktiviert (settings.active=false)"

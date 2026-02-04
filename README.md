@@ -96,6 +96,7 @@ sudo systemctl restart disk2iso
 ### Automatisch
 
 Der Provider wird automatisch verwendet, wenn:
+
 - Eine Audio-CD eingelegt wird
 - libmetadata.sh aktiviert ist
 - MusicBrainz als Audio-Provider konfiguriert ist
@@ -110,7 +111,7 @@ sudo journalctl -u disk2iso -f | grep MusicBrainz
 
 ### Via Web-UI
 
-1. Öffne http://your-server:5000
+1. Öffne <http://your-server:5000>
 2. Lege Audio-CD ein
 3. **Metadata-Dialog** öffnet sich automatisch
 4. Wähle Album aus MusicBrainz-Suchergebnissen
@@ -140,7 +141,7 @@ curl "http://localhost:5000/api/metadata/query?provider=musicbrainz&discid=Wn8eR
 
 ## 📊 Ausgabe-Struktur
 
-```
+```text
 /media/iso/metadata/musicbrainz/
 ├── cache/
 │   ├── Wn8eRBtfLDfL0qjYPdxrz.Zjs_U-.nfo    # Cached Query-Results
@@ -180,13 +181,15 @@ metadata_register_provider "musicbrainz" "audio-cd"
 - **Release Details**: `GET /release/{mbid}`
 - **CoverArt Archive**: `GET http://coverartarchive.org/release/{mbid}/front`
 
-**Dokumentation**: 
+**Dokumentation:**
+
 - [MusicBrainz API](https://musicbrainz.org/doc/MusicBrainz_API)
 - [CoverArt Archive API](https://coverartarchive.org/doc/MusicBrainz_API)
 
 ### Rate Limiting
 
 MusicBrainz hat strikte Rate Limits:
+
 - **1 Request/Sekunde** (default im Modul konfiguriert)
 - Nutze Cache um Requests zu minimieren
 - User-Agent ist **erforderlich**
@@ -208,7 +211,7 @@ discid /dev/cdrom
 
 ### Struktur
 
-```
+```text
 disk2iso-musicbrainz/
 ├── conf/
 │   └── libmusicbrainz.ini      # Provider-Manifest

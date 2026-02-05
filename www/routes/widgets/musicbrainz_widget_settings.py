@@ -23,7 +23,7 @@ def get_musicbrainz_settings():
     try:
         ini_path = get_musicbrainz_ini_path()
         
-        config = {
+        settings = {
             "enabled": True,
             "active": True,
             "cache_enabled": True,
@@ -36,13 +36,13 @@ def get_musicbrainz_settings():
             parser.read(ini_path)
             
             if parser.has_section('settings'):
-                config['enabled'] = parser.getboolean('settings', 'enabled', fallback=True)
-                config['active'] = parser.getboolean('settings', 'active', fallback=True)
-                config['cache_enabled'] = parser.getboolean('settings', 'cache_enabled', fallback=True)
-                config['cache_duration_days'] = parser.getint('settings', 'cache_duration_days', fallback=30)
-                config['rate_limit_delay'] = parser.getint('settings', 'rate_limit_delay', fallback=1000)
+                settings['enabled'] = parser.getboolean('settings', 'enabled', fallback=True)
+                settings['active'] = parser.getboolean('settings', 'active', fallback=True)
+                settings['cache_enabled'] = parser.getboolean('settings', 'cache_enabled', fallback=True)
+                settings['cache_duration_days'] = parser.getint('settings', 'cache_duration_days', fallback=30)
+                settings['rate_limit_delay'] = parser.getint('settings', 'rate_limit_delay', fallback=1000)
         
-        return config
+        return settings
         
     except Exception as e:
         print(f"Fehler beim Lesen der MusicBrainz-Einstellungen: {e}", file=sys.stderr)
@@ -97,7 +97,7 @@ def api_musicbrainz_settings_widget():
     config = get_musicbrainz_settings()
     
     return render_template('widgets/musicbrainz_widget_settings.html',
-                         config=config,
+                         settings=settings,
                          t=t)
 
 @musicbrainz_settings_bp.route('/api/widgets/musicbrainz/settings', methods=['POST'])
@@ -116,3 +116,4 @@ def api_save_musicbrainz_settings():
             
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+

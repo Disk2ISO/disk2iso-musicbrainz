@@ -497,6 +497,62 @@ init_musicbrainz_provider() {
     return $reg_result
 }
 
+# ============================================================================
+# SOFTWARE INFORMATION (für Widgets)
+# ============================================================================
+
+# ===========================================================================
+# musicbrainz_collect_software_info
+# ---------------------------------------------------------------------------
+# Funktion.: Sammle MusicBrainz-Provider Software-Informationen
+# Parameter: keine
+# Rückgabe.: 0 = Erfolg, 1 = Fehler
+# Schreibt.: api/musicbrainz_software_info.json
+# Hinweis..: Liest Dependencies aus libmusicbrainz.ini und nutzt zentrale Prüfung
+# ===========================================================================
+musicbrainz_collect_software_info() {
+    local api_dir=$(folders_get_api_dir) || return 1
+    
+    # Lese externe Dependencies aus INI
+    local external_deps=$(config_get_value_ini "musicbrainz" "dependencies" "external")
+    # Format: "curl,jq"
+    
+    # Konvertiere zu Array
+    IFS=',' read -ra dep_array <<< "$external_deps"
+    
+    # Rufe zentrale Prüffunktion auf (aus libsysteminfo.sh)
+    local software_json=$(systeminfo_check_software_list "${dep_array[@]}")
+    
+    # Schreibe in Modul-spezifisches JSON
+    echo "$software_json" > "${api_dir}/musicbrainz_software_info.json"
+    
+    return 0
+}
+
+# ===========================================================================
+# musicbrainz_get_software_info
+# ---------------------------------------------------------------------------
+# Funktion.: Lese MusicBrainz-Software-Informationen für Widget
+# Parameter: keine
+# Rückgabe.: 0 = Erfolg, 1 = Fehler
+# Ausgabe..: JSON-Array (stdout)
+# Für.....: musicbrainz_widget_4x1_dependencies
+# Nutzung..: Wird von /api/modules/musicbrainz/software aufgerufen
+# ===========================================================================
+musicbrainz_get_software_info() {
+    local api_dir=$(folders_get_api_dir) || return 1
+    local json_file="${api_dir}/musicbrainz_software_info.json"
+    
+    # Fallback: Sammle Daten wenn JSON nicht existiert
+    if [[ ! -f "$json_file" ]]; then
+        musicbrainz_collect_software_info || return 1
+    fi
+    
+    # Gib JSON aus
+    cat "$json_file"
+    return 0
+}
+
 ################################################################################
 # ENDE lib-musicbrainz.sh
 ################################################################################

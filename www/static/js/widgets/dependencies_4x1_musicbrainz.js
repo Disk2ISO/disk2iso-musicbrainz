@@ -1,11 +1,11 @@
 /**
- * MusicBrainz Module - Dependencies Widget (4x1)
+ * Dependencies Widget (4x1) - MusicBrainz
  * Zeigt MusicBrainz spezifische Tools (Python-Module)
  * Version: 1.0.0
  */
 
 function loadMusicBrainzDependencies() {
-    fetch('/api/system')
+    fetch('/api/widgets/musicbrainz/dependencies')
         .then(response => response.json())
         .then(data => {
             if (data.success && data.software) {

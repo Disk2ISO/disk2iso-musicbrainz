@@ -96,8 +96,8 @@ def api_musicbrainz_settings_widget():
     """
     config = get_musicbrainz_settings()
     
-    return render_template('widgets/musicbrainz_widget_settings.html',
-                         settings=settings,
+    return render_template('widgets/settings_4x1_musicbrainz.html',
+                         settings=config,
                          t=t)
 
 @musicbrainz_settings_bp.route('/api/widgets/musicbrainz/settings', methods=['POST'])

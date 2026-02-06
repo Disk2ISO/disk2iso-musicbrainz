@@ -1,5 +1,5 @@
 /**
- * disk2iso - MusicBrainz Settings Widget
+ * disk2iso - Settings Widget (4x1) - MusicBrainz
  * Lädt MusicBrainz Einstellungen dynamisch
  */
 

@@ -1,0 +1,62 @@
+{
+  "id": "musicbrainz",
+  "name": "MusicBrainz Provider",
+  "category": "providers",
+  "description": "Metadata-Provider für Audio-CDs via MusicBrainz API v2",
+  "icon": "https://raw.githubusercontent.com/Disk2ISO/disk2iso-musicbrainz/main/store/icon.svg",
+  "author": "Disk2ISO Team",
+  "homepage": "https://github.com/Disk2ISO/disk2iso-musicbrainz",
+  "repository": "https://github.com/Disk2ISO/disk2iso-musicbrainz",
+  "license": "MIT",
+  "requires": {
+    "disk2iso": ">=1.3.0",
+    "metadata": ">=1.3.0"
+  },
+  "current_version": "1.3.0",
+  "versions": [
+    {
+      "version": "1.3.0",
+      "released": "2026-02-07",
+      "changelog": "Kompatibilität mit disk2iso 1.3.0 Service-Struktur",
+      "download_url": "https://github.com/Disk2ISO/disk2iso-musicbrainz/releases/download/v1.3.0/musicbrainz-module.zip",
+      "checksum_url": "https://github.com/Disk2ISO/disk2iso-musicbrainz/releases/download/v1.3.0/musicbrainz-module.zip.sha256",
+      "size": "TBD"
+    },
+    {
+      "version": "1.2.0",
+      "released": "2026-02-04",
+      "changelog": "Initiales Release als Provider-Modul",
+      "download_url": "https://github.com/Disk2ISO/disk2iso-musicbrainz/releases/download/v1.2.0/musicbrainz-module.zip",
+      "checksum_url": "https://github.com/Disk2ISO/disk2iso-musicbrainz/releases/download/v1.2.0/musicbrainz-module.zip.sha256",
+      "size": "TBD"
+    }
+  ],
+  "install_method": "unzip",
+  "install_path": "/opt/disk2iso/",
+  "post_install": [
+    "sudo systemctl restart disk2iso-web"
+  ],
+  "provider_type": "audio",
+  "api_endpoint": "https://musicbrainz.org/ws/2/",
+  "rate_limit": "1 request/second",
+  "features": [
+    "DiscID basierte Suche",
+    "Album und Track Metadaten",
+    "Cover-Art von CoverArtArchive",
+    "Artist-Informationen",
+    "Release-Daten und Labels",
+    "Multi-Language Support"
+  ],
+  "dependencies": {
+    "system": [
+      "curl",
+      "jq"
+    ]
+  },
+  "planned_features": [
+    "ISRC Track-Matching",
+    "Composer Informationen",
+    "Multi-CD Sets",
+    "AcoustID Fingerprinting"
+  ]
+}

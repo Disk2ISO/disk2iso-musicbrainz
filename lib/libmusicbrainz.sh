@@ -271,7 +271,7 @@ musicbrainz_query() {
 #            $2 = query_file (.mbquery Datei)
 #            $3 = select_file (.mbselect Datei)
 # Rückgabe: 0 = Parse erfolgreich, setzt globale Variablen
-# Setzt: Metadaten via metadb_set_data() (artist, album, year, provider, provider_id)
+# Setzt: Metadaten via metadata_set_data() (artist, album, year, provider, provider_id)
 musicbrainz_parse_selection() {
     local selected_index="$1"
     local query_file="$2"
@@ -308,19 +308,19 @@ musicbrainz_parse_selection() {
         year="0000"
     fi
     
-    # Setze Metadaten via metadb_set() API
-    metadb_set_data "artist" "$artist"
-    metadb_set_data "album" "$album"
-    metadb_set_data "year" "$year"
+    # Setze Metadaten via metadata_set_data() API
+    metadata_set_data "artist" "$artist"
+    metadata_set_data "album" "$album"
+    metadata_set_data "year" "$year"
     
     # Setze Provider-Informationen
-    metadb_set_metadata "provider" "musicbrainz"
+    metadata_set_info "provider" "musicbrainz"
     
     # Extrahiere Release-ID falls vorhanden
     local release_id
     release_id=$(echo "$mb_json" | jq -r ".[$selected_index].id // \"\"" 2>/dev/null)
     if [[ -n "$release_id" ]] && [[ "$release_id" != "null" ]]; then
-        metadb_set_metadata "provider_id" "$release_id"
+        metadata_set_info "provider_id" "$release_id"
     fi
     
     log_info "MusicBrainz: Metadata ausgewählt: $artist - $album ($year)"
@@ -351,7 +351,7 @@ musicbrainz_apply_selection() {
     
     # Update disc_label via metadb API
     local new_label="${safe_artist}_${safe_album}_${year}"
-    metadb_set_metadata "disc_label" "$new_label"
+    metadata_set_info "disc_label" "$new_label"
     
     log_info "MusicBrainz: Neues disc_label: $new_label"
 }

@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# MusicBrainz Cached Queries Function
+# TODO: Diese Funktion muss in libmusicbrainz.sh implementiert werden
+#
+# Zweck: Sucht nach *.mbquery Dateien, berechnet Timeout und gibt strukturiertes JSON zurück
+#
+# Rückgabe (JSON):
+# {
+#   "pending": true,
+#   "disc_type": "audio-cd",
+#   "disc_id": "DISC_ID",
+#   "timeout": 45,
+#   "releases": [...],
+#   "track_count": 12
+# }
+#
+# oder
+# {
+#   "pending": false
+# }
+
+musicbrainz_get_cached_queries() {
+    # TODO: Implementation needed in /opt/disk2iso-musicbrainz/lib/libmusicbrainz.sh
+    
+    # Logik:
+    # 1. Suche nach *.mbquery Dateien in $OUTPUT_DIR/**
+    # 2. Wenn gefunden:
+    #    - Lese Datei-Timestamp (stat)
+    #    - Berechne elapsed time
+    #    - Lese METADATA_SELECTION_TIMEOUT aus Config
+    #    - Berechne timeout_remaining = max(0, timeout - elapsed)
+    #    - Parse JSON-Datei für releases + track_count
+    #    - Extrahiere disc_id aus Dateinamen (remove .mbquery + _mb Suffix)
+    #    - Baue JSON-Response
+    # 3. Wenn nicht gefunden: {"pending": false}
+    
+    echo '{"pending": false}'
+}

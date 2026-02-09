@@ -24,8 +24,8 @@ async function checkMusicBrainzStatus() {
             return;
         }
         
-        // Neuer Endpoint: /api/metadata/pending
-        const response = await fetch('/api/metadata/pending');
+        // MusicBrainz-spezifischer Endpoint
+        const response = await fetch('/api/metadata/musicbrainz/pending');
         
         if (!response.ok) {
             return;
@@ -203,18 +203,17 @@ function closeMusicBrainzModal() {
 async function skipMusicBrainzSelection() {
     try {
         // Lese disc_id aus pending-data
-        const pendingResponse = await fetch('/api/metadata/pending');
+        const pendingResponse = await fetch('/api/metadata/musicbrainz/pending');
         const pendingData = await pendingResponse.json();
         
-        const response = await fetch('/api/metadata/select', {
+        const response = await fetch('/api/metadata/musicbrainz/select', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 disc_id: pendingData.disc_id,
-                index: 'skip',
-                disc_type: 'audio-cd'
+                index: 'skip'
             })
         });
         
@@ -236,15 +235,18 @@ async function skipMusicBrainzSelection() {
 async function confirmMusicBrainzSelection() {
     try {
         // Lese disc_id aus pending-data
-        const pendingResponse = await fetch('/api/metadata/pending');
+        const pendingResponse = await fetch('/api/metadata/musicbrainz/pending');
         const pendingData = await pendingResponse.json();
         
-        const response = await fetch('/api/metadata/select', {
+        const response = await fetch('/api/metadata/musicbrainz/select', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ index: selectedIndex })
+            body: JSON.stringify({
+                disc_id: pendingData.disc_id,
+                index: selectedIndex
+            })
         });
         
         const result = await response.json();

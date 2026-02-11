@@ -42,7 +42,7 @@ musicbrainz_check_dependencies() {
     log_debug "$MSG_DEBUG_MUSICBRAINZ_CHECK_START"
 
     #-- Alle Modul Abhängigkeiten prüfen ------------------------------------
-    check_module_dependencies "$MODULE_NAME_MUSICBRAINZ" || return 1
+    integrity_check_module_dependencies "$MODULE_NAME_MUSICBRAINZ" || return 1
 
     #-- Lade API-Konfiguration aus INI --------------------------------------
     load_api_config_musicbrainz || return 1
@@ -67,7 +67,7 @@ musicbrainz_check_dependencies() {
 # PATH CONSTANTS / GETTER
 # ===========================================================================
 # DEPRECATED: CACHEDIR_MUSICBRAINZ und COVERDIR_MUSICBRAINZ werden nicht mehr verwendet
-# Ordnerpfade werden aus conf/libmusicbrainz.ini [folders] gelesen (via check_module_dependencies)
+# Ordnerpfade werden aus conf/libmusicbrainz.ini [folders] gelesen (via integrity_check_module_dependencies)
 
 # ===========================================================================
 # get_path_musicbrainz
@@ -92,7 +92,7 @@ get_path_musicbrainz() {
 #            1. [folders] cache aus INI (spezifisch)
 #            2. [folders] output + /cache (konstruiert)
 #            3. OUTPUT_DIR/cache (global)
-#            Ordner wird von check_module_dependencies() erstellt
+#            Ordner wird von integrity_check_module_dependencies() erstellt
 # ===========================================================================
 get_cachepath_musicbrainz() {
     files_get_module_folder_path "musicbrainz" "cache"
@@ -108,7 +108,7 @@ get_cachepath_musicbrainz() {
 #            1. [folders] covers aus INI (spezifisch)
 #            2. [folders] output + /covers (konstruiert)
 #            3. OUTPUT_DIR/covers (global)
-#            Ordner wird von check_module_dependencies() erstellt
+#            Ordner wird von integrity_check_module_dependencies() erstellt
 # ===========================================================================
 get_coverpath_musicbrainz() {
     files_get_module_folder_path "musicbrainz" "covers"
